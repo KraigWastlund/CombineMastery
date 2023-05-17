@@ -10,7 +10,7 @@ import Combine
 
 class CurrentValueSubjectViewModel: ObservableObject {
     @Published var selection = "No Name Selected"
-    var selectionSame = CurrentValueSubject<Bool, Never>(false)
+    // var selectionSame = CurrentValueSubject<Bool, Never>(false) // this should be fine - wth?
     var cancellables: [AnyCancellable] = []
     
     init() {
@@ -21,7 +21,7 @@ class CurrentValueSubjectViewModel: ObservableObject {
             }
             .sink { [weak self] value in
                 guard let self else { return }
-                self.selectionSame.value = value
+                // self.selectionSame.value = value
                 objectWillChange.send()
             }
             .store(in: &cancellables)
@@ -42,7 +42,8 @@ struct CurrentValueSubject: View {
             }
             
             Text(vm.selection)
-                .foregroundColor(vm.selectionSame.value ? .red : .green)
+                .foregroundColor(.red)
+                // .foregroundColor(vm.selectionSame.value ? .red : .green)
         }
         .font(.title)
     }
